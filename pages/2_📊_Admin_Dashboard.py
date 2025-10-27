@@ -1,11 +1,10 @@
 import streamlit as st
-import pandas as pd
 from utils.storage import fetch_reports_df, purge_all, get_destination_json
 
 st.title("📊 Admin Dashboard")
 
 with st.expander("Filters", expanded=True):
-    q = st.text_input("Free text search (reporter, org, summary)…")
+    q = st.text_input("Free text search (ref, reporter, org, summary)…")
 
 col1, col2, col3 = st.columns([3,1,1])
 with col1:
@@ -26,14 +25,12 @@ with col3:
         st.warning("All data removed (dev only). Reload page.")
 
 st.markdown("---")
-
 st.subheader("Destination Exports")
 
 dest = st.selectbox(
     "Choose a destination schema to preview",
     ["ACSC", "HomeAffairs", "OAIC", "APRA", "ASIC", "RBA", "ACCC/CDR", "TGA"],
 )
-
 idx = st.number_input("Report ID", min_value=1, step=1)
 if st.button("Generate JSON", use_container_width=True):
     try:
@@ -48,9 +45,3 @@ if st.button("Generate JSON", use_container_width=True):
         )
     except Exception as e:
         st.error(str(e))
-
-st.markdown(
-    """
-**Next**: wire the export to webhooks/APIs (e.g., secure mailbox, integration layer, Jira, Salesforce). Add RBAC/auth before production.
-"""
-)
