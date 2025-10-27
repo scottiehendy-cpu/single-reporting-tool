@@ -6,7 +6,7 @@ def shape_for_destination(dest: str, payload: dict) -> dict:
         return _shape_home_affairs(payload)
     if dest == "oaic":
         return _shape_oaic(payload)
-    if dest in ("apra", "asic", "rba", "tga", "accc/cdr", "accc", "cdr"):
+    if dest in ("apra","asic","rba","tga","accc/cdr","accc","cdr"):
         return _shape_generic(payload, dest.upper())
     return {"destination": dest, "payload": payload}
 
